@@ -11,10 +11,12 @@ public class Movement : MonoBehaviour
     bool _canJump = false;
     Rigidbody2D Rb;
     Animator anim;
+    Animator swordAnim;
     private void Awake()
     {
         Rb = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<Animator>();
+        swordAnim = transform.GetChild(1).GetComponent<Animator>();
     }
     private void Update()
     {
@@ -78,5 +80,6 @@ public class Movement : MonoBehaviour
     void Attack()
     {
         anim.SetTrigger("Attack");
+        swordAnim.SetTrigger("SwordArc");
     }
 }
