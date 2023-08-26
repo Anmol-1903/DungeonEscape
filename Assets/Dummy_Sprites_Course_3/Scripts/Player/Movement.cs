@@ -33,6 +33,7 @@ public class Movement : MonoBehaviour
             Jump();
             _isGrounded = false;
         }
+        anim.SetBool("Jumping", !GroundCheck());
     }
     private bool GroundCheck()
     {
@@ -62,13 +63,11 @@ public class Movement : MonoBehaviour
     {
         Rb.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
         _canJump = false;
-        anim.SetBool("Jumping", true);
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.CompareTag("Ground"))
         {
-            anim.SetBool("Jumping", false);
             StartCoroutine(ResetJump());
         }
     }

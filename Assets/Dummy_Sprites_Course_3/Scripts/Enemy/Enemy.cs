@@ -7,9 +7,14 @@ public abstract class Enemy : MonoBehaviour
 
     [SerializeField] protected Transform A,B;
 
-    protected Vector3 destination;
-    protected Animator anim;
     protected SpriteRenderer sprite;
+    protected Vector3 destination;
+    protected float distance = 2f;
+    protected Animator anim;
+
+    protected bool isHit = false;
+    protected GameObject player;
+
     private void Start()
     {
         Init();
@@ -18,6 +23,7 @@ public abstract class Enemy : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
     public virtual void Update()
     {
@@ -47,6 +53,14 @@ public abstract class Enemy : MonoBehaviour
             anim.SetTrigger("Idle");
             destination = A.position;
         }
-        transform.position = Vector2.MoveTowards(transform.position, destination, speed * Time.deltaTime);
+        if(Vector3.Distance(transform.position, player.transform.position) > distance && !isHit)
+        {
+            isHit = false;
+            anim.SetBool("Combat", false);
+        }
+        if (!isHit)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, destination, speed * Time.deltaTime);
+        }
     }
 }
