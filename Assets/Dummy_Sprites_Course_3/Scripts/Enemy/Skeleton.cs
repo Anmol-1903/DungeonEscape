@@ -7,6 +7,14 @@ public class Skeleton : Enemy, IDamageable
         base.Init();
         Health = health;
     }
+    public override void Movement()
+    {
+        base.Movement();
+        
+       
+            Debug.Log(isHit);
+       
+    }
     public void Damage()
     {
         Health--;

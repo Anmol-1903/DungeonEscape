@@ -27,7 +27,7 @@ public abstract class Enemy : MonoBehaviour
     }
     public virtual void Update()
     {
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") && !anim.GetBool("Combat"))
         {
             return;
         }
@@ -53,7 +53,7 @@ public abstract class Enemy : MonoBehaviour
             anim.SetTrigger("Idle");
             destination = A.position;
         }
-        if(Vector3.Distance(transform.position, player.transform.position) > distance && !isHit)
+        if(Vector3.Distance(transform.localPosition, player.transform.localPosition) > distance)
         {
             isHit = false;
             anim.SetBool("Combat", false);
