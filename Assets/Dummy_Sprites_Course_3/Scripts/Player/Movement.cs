@@ -1,7 +1,9 @@
 using UnityEngine;
 using System.Collections;
-public class Movement : MonoBehaviour
+public class Movement : MonoBehaviour, IDamageable
 {
+    public int Health { get; set; }
+    [SerializeField] int _maxHealth = 5;
     [SerializeField] float _speed = 500f;
     [SerializeField] float _jumpForce = 5f;
     [SerializeField] float _waitTillNextJump = .1f;
@@ -12,11 +14,14 @@ public class Movement : MonoBehaviour
     Rigidbody2D Rb;
     Animator anim;
     Animator swordAnim;
+
+
     private void Awake()
     {
         Rb = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<Animator>();
         swordAnim = transform.GetChild(1).GetComponent<Animator>();
+        Health = _maxHealth;
     }
     private void Update()
     {
@@ -80,5 +85,17 @@ public class Movement : MonoBehaviour
     {
         anim.SetTrigger("Attack");
         swordAnim.SetTrigger("SwordArc");
+    }
+
+    public void Damage()
+    {
+        Health--;
+        //anim.SetTrigger("Hit");
+        //anim.SetBool("Combat", true);
+        if (Health < 1)
+        {
+            Destroy(gameObject);
+        }
+        Debug.Log("Health = " + Health);
     }
 }

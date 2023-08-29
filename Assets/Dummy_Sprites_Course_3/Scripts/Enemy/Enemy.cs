@@ -60,6 +60,7 @@ public abstract class Enemy : MonoBehaviour
         }
         if (!isHit)
         {
+            transform.localScale = Vector3.one;
             transform.position = Vector2.MoveTowards(transform.position, destination, speed * Time.deltaTime);
         }
     }
