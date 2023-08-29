@@ -63,5 +63,14 @@ public abstract class Enemy : MonoBehaviour
             transform.localScale = Vector3.one;
             transform.position = Vector2.MoveTowards(transform.position, destination, speed * Time.deltaTime);
         }
+        Vector3 dir = player.transform.position - transform.position;
+        if (dir.x > 0 && anim.GetBool("Combat") == true)
+        {
+            sprite.flipX = false;
+        }
+        else if (dir.x < 0 && anim.GetBool("Combat") == true)
+        {
+            sprite.flipX = true;
+        }
     }
 }
