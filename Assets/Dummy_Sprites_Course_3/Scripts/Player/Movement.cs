@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 public class Movement : MonoBehaviour, IDamageable
 {
+
+    public int _diamonds;
     public int Health { get; set; }
     [SerializeField] int _maxHealth = 5;
     [SerializeField] float _speed = 500f;
@@ -96,6 +98,5 @@ public class Movement : MonoBehaviour, IDamageable
         {
             Destroy(gameObject);
         }
-        Debug.Log("Health = " + Health);
     }
 }

@@ -3,6 +3,7 @@ public class Spider : Enemy, IDamageable
 {
     public int Health { get; set; }
     [SerializeField] GameObject _acidPrefab;
+    [SerializeField] Transform _container;
     public override void Init()
     {
         base.Init();
@@ -19,11 +20,13 @@ public class Spider : Enemy, IDamageable
         anim.SetBool("Combat", true);
         if (Health < 1)
         {
-            Destroy(gameObject);
+            isDead = true;
+            gameObject.GetComponent<Collider2D>().enabled = false;
+            anim.SetTrigger("Death");
         }
     }
     public void Attack()
     {
-        Instantiate(_acidPrefab, transform.position, Quaternion.identity);
+        Instantiate(_acidPrefab, transform.position, Quaternion.identity, _container);
     }
 }

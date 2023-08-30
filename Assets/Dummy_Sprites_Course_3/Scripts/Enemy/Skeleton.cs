@@ -19,7 +19,9 @@ public class Skeleton : Enemy, IDamageable
         anim.SetBool("Combat", true);
         if(Health < 1)
         {
-            Destroy(gameObject);
+            isDead = true;
+            gameObject.GetComponent<Collider2D>().enabled = false;
+            anim.SetTrigger("Death");
         }
     }
 }

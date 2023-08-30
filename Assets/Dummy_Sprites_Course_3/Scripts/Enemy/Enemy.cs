@@ -13,6 +13,7 @@ public abstract class Enemy : MonoBehaviour
     protected Animator anim;
 
     protected bool isHit = false;
+    protected bool isDead = false;
     protected GameObject player;
 
     private void Start()
@@ -27,7 +28,7 @@ public abstract class Enemy : MonoBehaviour
     }
     public virtual void Update()
     {
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") && !anim.GetBool("Combat"))
+        if (isDead || (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") && !anim.GetBool("Combat")))
         {
             return;
         }
