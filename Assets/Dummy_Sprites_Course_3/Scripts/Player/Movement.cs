@@ -44,8 +44,8 @@ public class Movement : MonoBehaviour, IDamageable
     }
     private bool GroundCheck()
     {
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(transform.position, Vector2.down, transform.localScale.y * .8f, _groundLayer.value);
-        Debug.DrawRay(transform.position, Vector2.down * transform.localScale.y * 0.8f, Color.green);
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(transform.position, Vector2.down, transform.localScale.y * 1f, _groundLayer.value);
+        Debug.DrawRay(transform.position, Vector2.down * transform.localScale.y * 1f, Color.green);
         if (raycastHit2D.collider != null)
         {
             return true;

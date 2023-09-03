@@ -7,6 +7,8 @@ public abstract class Enemy : MonoBehaviour
 
     [SerializeField] protected Transform A,B;
 
+    [SerializeField] protected GameObject _diamondPrefab;
+
     protected SpriteRenderer sprite;
     protected Vector3 destination;
     protected float distance = 2f;

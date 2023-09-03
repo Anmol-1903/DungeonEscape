@@ -11,7 +11,7 @@ public class Diamond : MonoBehaviour
             {
                 _player._diamonds += _gems;
             }
-            Destroy(other.gameObject);
+            Destroy(gameObject);
         }
     }
 }

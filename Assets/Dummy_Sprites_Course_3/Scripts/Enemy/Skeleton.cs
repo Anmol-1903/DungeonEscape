@@ -21,6 +21,8 @@ public class Skeleton : Enemy, IDamageable
         {
             isDead = true;
             gameObject.GetComponent<Collider2D>().enabled = false;
+            GameObject dia = Instantiate(_diamondPrefab, transform.position, Quaternion.identity) as GameObject;
+            dia.GetComponent<Diamond>()._gems = gems;
             anim.SetTrigger("Death");
         }
     }
