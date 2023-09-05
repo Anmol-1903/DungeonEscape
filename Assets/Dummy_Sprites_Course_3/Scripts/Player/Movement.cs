@@ -99,4 +99,9 @@ public class Movement : MonoBehaviour, IDamageable
             Destroy(gameObject);
         }
     }
+    public void AddGems(int _amt)
+    {
+        _diamonds += _amt;
+        UIManager.Instance.UpdateGems(_diamonds);
+    }
 }

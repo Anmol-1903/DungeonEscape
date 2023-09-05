@@ -9,7 +9,7 @@ public class Diamond : MonoBehaviour
             Movement _player = other.GetComponent<Movement>();
             if (_player)
             {
-                _player._diamonds += _gems;
+                _player.AddGems(_gems);
             }
             Destroy(gameObject);
         }

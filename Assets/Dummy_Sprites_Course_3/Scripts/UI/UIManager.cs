@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
     }
 
     [SerializeField] TextMeshProUGUI _gemsText;
+    [SerializeField] TextMeshProUGUI _gemsCountText;
 
     private void Awake()
     {
@@ -24,5 +25,9 @@ public class UIManager : MonoBehaviour
     public void OpenShop(int _gemCount)
     {
         _gemsText.text = _gemCount.ToString() + "G";
+    }
+    public void UpdateGems(int _gemCount)
+    {
+        _gemsCountText.text = _gemCount.ToString() + "G";
     }
 }
