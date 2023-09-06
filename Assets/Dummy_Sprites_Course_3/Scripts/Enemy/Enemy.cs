@@ -9,7 +9,6 @@ public abstract class Enemy : MonoBehaviour
 
     [SerializeField] protected GameObject _diamondPrefab;
 
-    protected SpriteRenderer sprite;
     protected Vector3 destination;
     protected float distance = 2f;
     protected Animator anim;
@@ -17,6 +16,7 @@ public abstract class Enemy : MonoBehaviour
     protected bool isHit = false;
     protected bool isDead = false;
     protected GameObject player;
+    bool flip = false;
 
     private void Start()
     {
@@ -25,7 +25,6 @@ public abstract class Enemy : MonoBehaviour
     public virtual void Init()
     {
         anim = GetComponentInChildren<Animator>();
-        sprite = GetComponentInChildren<SpriteRenderer>();
         player = GameObject.FindGameObjectWithTag("Player");
     }
     public virtual void Update()
@@ -38,22 +37,24 @@ public abstract class Enemy : MonoBehaviour
     }
     public virtual void Movement()
     {
-        if (destination == A.position)
+        if (flip)
         {
-            sprite.flipX = true;
+            transform.localScale = new Vector2(-1, 1);
         }
         else
         {
-            sprite.flipX = false;
+            transform.localScale = new Vector2(1, 1);
         }
         if (transform.position == A.position)
         {
+            flip = true;
             anim.SetTrigger("Idle");
             destination = B.position;
         }
         else if (transform.position == B.position)
         {
             anim.SetTrigger("Idle");
+            flip = false;
             destination = A.position;
         }
         if(Vector3.Distance(transform.localPosition, player.transform.localPosition) > distance)
@@ -69,11 +70,11 @@ public abstract class Enemy : MonoBehaviour
         Vector3 dir = player.transform.position - transform.position;
         if (dir.x > 0 && anim.GetBool("Combat") == true)
         {
-            sprite.flipX = false;
+            transform.localScale = new Vector2(1, 1);
         }
         else if (dir.x < 0 && anim.GetBool("Combat") == true)
         {
-            sprite.flipX = true;
+            transform.localScale = new Vector2(-1, 1);
         }
     }
 }

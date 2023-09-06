@@ -15,6 +15,13 @@ public class Attack : MonoBehaviour
                 damageable.Damage();
                 StartCoroutine(AttackCooldown());
             }
+            Debug.Log(GameObject.FindGameObjectWithTag("Player").GetComponent<Movement>().Health);
+            if (GameObject.FindGameObjectWithTag("Player").GetComponent<Movement>().Health <= 0)
+            {
+                GetComponentInParent<Animator>().SetBool("Combat", false);
+                GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Animator>().SetTrigger("Death");
+
+            }
         }
     }
     IEnumerator AttackCooldown()

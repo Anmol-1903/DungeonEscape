@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityStandardAssets.CrossPlatformInput;
 public class Movement : MonoBehaviour, IDamageable
 {
 
@@ -13,6 +14,7 @@ public class Movement : MonoBehaviour, IDamageable
 
     bool _isGrounded = false;
     bool _canJump = false;
+    bool _canWalk = true;
     Rigidbody2D Rb;
     Animator anim;
     Animator swordAnim;
@@ -25,17 +27,22 @@ public class Movement : MonoBehaviour, IDamageable
         swordAnim = transform.GetChild(1).GetComponent<Animator>();
         Health = _maxHealth;
     }
+    private void Start()
+    {
+        UIManager.Instance.UpdateLivesMaxHealth(_maxHealth);
+        UIManager.Instance.UpdateLives(_maxHealth);
+    }
     private void Update()
     {
         Move();
-        if(Input.GetMouseButtonDown(0) && _isGrounded)
+        if(CrossPlatformInputManager.GetButtonDown("A_Button") && _isGrounded)
         {
             Attack();
         }
 
         _isGrounded = GroundCheck();
 
-        if (Input.GetKeyDown(KeyCode.Space) && _isGrounded && _canJump)
+        if ((Input.GetKeyDown(KeyCode.Space) || CrossPlatformInputManager.GetButtonDown("B_Button")) && _isGrounded && _canJump)
         {
             Jump();
             _isGrounded = false;
@@ -54,7 +61,9 @@ public class Movement : MonoBehaviour, IDamageable
     }
     private void Move()
     {
-        float _horizontal = Input.GetAxisRaw("Horizontal");
+        if (!_canWalk)
+            return;
+        float _horizontal = CrossPlatformInputManager.GetAxisRaw("Horizontal");
         if(_horizontal != 0)
         {
             anim.SetFloat("Move", 1);
@@ -62,7 +71,10 @@ public class Movement : MonoBehaviour, IDamageable
         }
         else
         {
-            anim.SetFloat("Move", 0);
+            if(Health > 0)
+            {
+                anim.SetFloat("Move", 0);
+            }
         }
         Rb.velocity = new Vector2(_horizontal * _speed * Time.deltaTime, Rb.velocity.y);
     }
@@ -92,11 +104,13 @@ public class Movement : MonoBehaviour, IDamageable
     public void Damage()
     {
         Health--;
-        //anim.SetTrigger("Hit");
-        //anim.SetBool("Combat", true);
+        UIManager.Instance.UpdateLives(Health);
+        anim.SetTrigger("Hit");
         if (Health < 1)
         {
-            Destroy(gameObject);
+            anim.SetTrigger("Death");
+            _canJump = false;
+            _canWalk = false;
         }
     }
     public void AddGems(int _amt)

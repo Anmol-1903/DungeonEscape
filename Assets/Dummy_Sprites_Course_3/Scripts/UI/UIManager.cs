@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     private static UIManager _instance;
@@ -17,6 +18,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI _gemsText;
     [SerializeField] TextMeshProUGUI _gemsCountText;
+    [SerializeField] Slider _healthBar;
 
     private void Awake()
     {
@@ -29,5 +31,13 @@ public class UIManager : MonoBehaviour
     public void UpdateGems(int _gemCount)
     {
         _gemsCountText.text = _gemCount.ToString() + "G";
+    }
+    public void UpdateLives(int _health)
+    {
+        _healthBar.value = _health;
+    }
+    public void UpdateLivesMaxHealth(int _health)
+    {
+        _healthBar.maxValue = _health;
     }
 }
