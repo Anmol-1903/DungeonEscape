@@ -15,6 +15,7 @@ public class Movement : MonoBehaviour, IDamageable
     bool _isGrounded = false;
     bool _canJump = false;
     bool _canWalk = true;
+    int _facingRight = 1;
     Rigidbody2D Rb;
     Animator anim;
     Animator swordAnim;
@@ -64,14 +65,26 @@ public class Movement : MonoBehaviour, IDamageable
         if (!_canWalk)
             return;
         float _horizontal = CrossPlatformInputManager.GetAxisRaw("Horizontal");
-        if(_horizontal != 0)
+        if (Mathf.Abs(_horizontal) >= 0.25f)
         {
-            anim.SetFloat("Move", 1);
-            transform.localScale = new Vector2(_horizontal, 1f);
+            if (_horizontal > 0.25f)
+            {
+                _horizontal = 1f;
+                _facingRight = 1;
+                anim.SetFloat("Move", 1);
+            }
+            else if (_horizontal < -0.25f)
+            {
+                _horizontal = -1f;
+                _facingRight = -1;
+                anim.SetFloat("Move", 1);
+            }
+            transform.localScale = new Vector2(_facingRight, 1f);
         }
         else
         {
-            if(Health > 0)
+            _horizontal = 0f;
+            if (Health > 0)
             {
                 anim.SetFloat("Move", 0);
             }

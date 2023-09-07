@@ -39,11 +39,11 @@ public abstract class Enemy : MonoBehaviour
     {
         if (flip)
         {
-            transform.localScale = new Vector2(-1, 1);
+            transform.localScale = new Vector2(1, 1);
         }
         else
         {
-            transform.localScale = new Vector2(1, 1);
+            transform.localScale = new Vector2(-1, 1);
         }
         if (transform.position == A.position)
         {
@@ -64,7 +64,6 @@ public abstract class Enemy : MonoBehaviour
         }
         if (!isHit)
         {
-            transform.localScale = Vector3.one;
             transform.position = Vector2.MoveTowards(transform.position, destination, speed * Time.deltaTime);
         }
         Vector3 dir = player.transform.position - transform.position;
