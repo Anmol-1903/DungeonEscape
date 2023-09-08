@@ -89,7 +89,6 @@ public class Movement : MonoBehaviour, IDamageable
                 anim.SetFloat("Move", 0);
             }
         }
-        Debug.Log(_horizontal * _speed * Time.deltaTime);
         Rb.velocity = new Vector2(_horizontal * _speed * Time.deltaTime, Rb.velocity.y);
     }
     private void Jump()
