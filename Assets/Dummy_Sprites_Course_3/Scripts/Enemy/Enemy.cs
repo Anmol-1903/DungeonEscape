@@ -57,7 +57,7 @@ public abstract class Enemy : MonoBehaviour
             flip = false;
             destination = A.position;
         }
-        if(Vector3.Distance(transform.localPosition, player.transform.localPosition) > distance)
+        if(Vector3.Distance(transform.localPosition, player.transform.localPosition) > distance || player.GetComponent<Movement>().Health <= 0)
         {
             isHit = false;
             anim.SetBool("Combat", false);

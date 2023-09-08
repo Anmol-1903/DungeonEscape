@@ -64,7 +64,7 @@ public class Movement : MonoBehaviour, IDamageable
     {
         if (!_canWalk)
             return;
-        float _horizontal = CrossPlatformInputManager.GetAxisRaw("Horizontal");
+        float _horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
         if (Mathf.Abs(_horizontal) >= 0.25f)
         {
             if (_horizontal > 0.25f)
@@ -89,6 +89,7 @@ public class Movement : MonoBehaviour, IDamageable
                 anim.SetFloat("Move", 0);
             }
         }
+        Debug.Log(_horizontal * _speed * Time.deltaTime);
         Rb.velocity = new Vector2(_horizontal * _speed * Time.deltaTime, Rb.velocity.y);
     }
     private void Jump()
@@ -110,8 +111,11 @@ public class Movement : MonoBehaviour, IDamageable
     }
     void Attack()
     {
-        anim.SetTrigger("Attack");
-        swordAnim.SetTrigger("SwordArc");
+        if (Health > 0)
+        {
+            anim.SetTrigger("Attack");
+            swordAnim.SetTrigger("SwordArc");
+        }
     }
 
     public void Damage()
