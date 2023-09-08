@@ -35,6 +35,11 @@ public class Movement : MonoBehaviour, IDamageable
     }
     private void Update()
     {
+        if (Health <= 0)
+        {
+            Rb.velocity = new Vector2(0, Rb.velocity.y);
+            return;
+        }
         Move();
         if(CrossPlatformInputManager.GetButtonDown("A_Button") && _isGrounded)
         {
@@ -65,7 +70,7 @@ public class Movement : MonoBehaviour, IDamageable
         if (!_canWalk)
             return;
         float _horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
-        if (Mathf.Abs(_horizontal) >= 0.25f)
+        if (Mathf.Abs(_horizontal) >= 0.25f )
         {
             if (_horizontal > 0.25f)
             {
@@ -93,8 +98,11 @@ public class Movement : MonoBehaviour, IDamageable
     }
     private void Jump()
     {
-        Rb.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
-        _canJump = false;
+        if (Health > 0)
+        {
+            Rb.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+            _canJump = false;
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
